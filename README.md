@@ -13,22 +13,7 @@
 
 **Project Structure**
 
-  automation-project/
-    ├── pages/                  # Page Object Model files
-    │   ├── login.page.js
-    │   ├── automation.page.js
-    │   └── form.page.js
-    │
-    ├── tests/                  # Test specifications
-    │   ├── messageBox.spec.js
-    │   ├── formUpload.spec.js
-    │   └── learningInstance.api.spec.js
-    │
-    ├── auth.json                # Stored login session
-    ├── playwright.config.js
-    ├── package.json
-    └── README.md
-
+<img width="1204" height="736" alt="Screenshot 2026-01-11 154433" src="https://github.com/user-attachments/assets/3c29794d-6191-4714-bc76-b3e27225e299" />
 
 
 **Test Coverage**
