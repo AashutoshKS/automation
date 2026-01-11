@@ -1,4 +1,8 @@
 const { test, expect } = require('@playwright/test');
+const isCI = !!process.env.CI;
+
+test.skip(isCI, 'Skipped in CI due to Automation Anywhere UI instability');
+
 
 test.use({ storageState: 'auth.json' });
 

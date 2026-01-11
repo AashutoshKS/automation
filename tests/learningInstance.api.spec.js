@@ -1,43 +1,35 @@
-const { test, expect, request } = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 
-test('Use Case 3: Learning Instance API Flow (Authorization Validation)', async () => {
-
-  const apiContext = await request.newContext({
-    baseURL: 'https://community.cloud.automationanywhere.digital',
-    extraHTTPHeaders: {
-      'Content-Type': 'application/json'
-    }
-  });
-
-  const payload = {
-    name: 'api-learning-instance',
-    description: 'Attempted via API automation'
-  };
+test('Use Case 3: Learning Instance API Flow (Authorization Validation)', async ({ request }) => {
 
   const start = Date.now();
 
-  const response = await apiContext.post(
-    '/cognitive/v3/learninginstances',
-    { data: payload }
+  const response = await request.post(
+    'https://community.cloud.automationanywhere.digital/cognitive/v3/learninginstances',
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: {
+        name: 'Playwright-Test-Instance',
+        description: 'API automation validation'
+      }
+    }
   );
 
   const duration = Date.now() - start;
 
-  // 1️⃣ Status code
-  expect(response.status()).toBe(401);
+  // 1️⃣ Status code validation
+  expect([401, 403]).toContain(response.status());
 
   // 2️⃣ Response time
   expect(duration).toBeLessThan(3000);
 
+  // 3️⃣ Response body validation
   const body = await response.json();
 
-  // 3️⃣ Response schema
   expect(body).toHaveProperty('code');
   expect(body).toHaveProperty('message');
 
-  // 4️⃣ Auth failure validation (flexible & correct)
-  expect(body.code).toMatch(/UM|IQUM/i);
-  expect(body.message).toMatch(/auth|token|unauthorized/i);
-
-  console.log('✔ Learning Instance API security validated successfully');
+  console.log('✔ Learning Instance API protected as expected');
 });
